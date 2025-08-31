@@ -1,96 +1,300 @@
 <!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <script defer src="/_vercel/insights/script.js"></script>
-    <link
-      rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/@exampledev/new.css@1.1.2/new.min.css"
-    />
-    <title>Vercel HTML Starter</title>
-    <meta
-      name="description"
-      content="High-performance HTML based website template."
-    />
-  </head>
-  <body>
-    <h1>Vercel HTML Starter</h1>
-    <p>
-      This template is a simple, but powerful single
-      <code>index.html</code> file deployed to
-      <a href="https://vercel.com">Vercel</a>. When your site is deployed, all
-      static assets (like HTML, JavaScript, CSS, images, and more) are deployed
-      globally to every
-      <a href="https://vercel.com/docs/concepts/edge-network/overview"
-        >Vercel Edge Network</a
-      >
-      region.
-    </p>
-    <h2>Simple, privacy-friendly analytics</h2>
-    <p>
-      Want to understand your visitor traffic? Vercel Analytics gives you
-      first-party, privacy-friendly traffic analytics for your HTML site. This
-      template is already configured using the following script:
-    </p>
-    <pre><code>&lt;script defer src="/_vercel/insights/script.js"&gt;&lt;/script&gt;</code></pre>
-    <p>
-      Learn more about
-      <a href="https://vercel.com/analytics">Vercel Analytics</a>.
-    </p>
-    <h2>Integrated with git</h2>
-    <p>
-      Deploying updates to your site is as simple as
-      <code>git push</code> thanks to Vercel's advanced
-      <a href="https://vercel.com/docs/concepts/git">Git Integration</a>.
-      Support for GitHub, GitLab, Bitbucket is zero-configuration, and with the
-      flexible Vercel CLI and API, you can integrate with any tool possible.
-    </p>
-    <p>
-      Learn more about
-      <a href="https://vercel.com/docs/concepts/git">Git Integration</a>.
-    </p>
-    <h2>Fast <code>gzip</code> compression</h2>
-    <p>
-      To help ensure the smallest possible file sizes for your static assets,
-      the Vercel Edge Network compresses files by default using
-      <code>gzip</code>. You can also optionally use
-      <code>brotli</code> compressesion if you prefer.
-    </p>
-    <p>
-      Learn more about
-      <a href="https://vercel.com/docs/concepts/edge-network/compression"
-        >compression</a
-      >.
-    </p>
-    <h2>Advanced routing configuration</h2>
-    <p>
-      Vercel gives you a variety of ways to configure the routing of your
-      website. For example, adding redirects, rewrites, or headers to your page.
-      While you can use <code>vercel.json</code> to define these through JSON,
-      you can also express your routing configuration as code using
-      <a href="https://vercel.com/docs/concepts/functions/edge-middleware"
-        >Vercel Edge Middleware</a
-      >.
-    </p>
-    <p>
-      Middleware runs before the
-      <a href="https://vercel.com/docs/concepts/edge-network/caching"
-        >Vercel Edge Network Cache</a
-      >, so you can configure routing exactly as your application needs. For
-      example, this template uses <code>middleware.js</code> defined in the root
-      of the repository to add additional security headers to the site:
-    </p>
-    <pre><code>referrer-policy: origin-when-cross-origin
-strict-transport-security: max-age=31536000; includeSubDomains; preload
-x-content-type-options: nosniff
-x-dns-prefetch-control: on
-x-frame-options: DENY</code></pre>
-    <p>
-      Learn more about
-      <a href="https://vercel.com/docs/concepts/functions/edge-middleware"
-        >Vercel Edge Middleware</a
-      >.
-    </p>
-  </body>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portfolio</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Remixicon CSS CDN para los iconos -->
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@4.2.0/fonts/remixicon.css" rel="stylesheet">
+    <!-- Three.js CDN para el fondo animado en 3D -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <style>
+        /* Estilos base */
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #0d0d0d; /* Fondo oscuro casi negro */
+        }
+        
+        /* Estilos del canvas para el fondo 3D */
+        #bg-canvas {
+            position: fixed; /* Mantiene el canvas fijo en la ventana de visualización */
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            opacity: 0.2;
+            transition: opacity 0.5s ease;
+        }
+
+        /* Contenido superpuesto */
+        .content {
+            position: relative;
+            z-index: 1;
+        }
+        
+        /* Efecto de borde para las secciones */
+        .section-container {
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            background: rgba(25, 25, 25, 0.8);
+            backdrop-filter: blur(10px);
+        }
+
+        /* Estilo para las tarjetas de proyecto */
+        .project-card {
+            transform: perspective(1000px) rotateX(0deg);
+            transition: transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .project-card:hover {
+            transform: perspective(1000px) rotateX(5deg) scale(1.02);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        }
+    </style>
+
+</head>
+<body class="text-gray-100 transition-colors duration-300">
+
+    <!-- Canvas para el fondo 3D -->
+    <canvas id="bg-canvas"></canvas>
+
+    <!-- Contenedor principal del contenido -->
+    <div class="content">
+
+        <!-- Navegación -->
+        <header class="sticky top-0 z-50 bg-transparent">
+            <nav class="container mx-auto px-4 py-4 flex justify-between items-center">
+                <a href="#" class="text-2xl font-bold text-gray-300 rounded-lg p-2 transition hover:text-white">Portfolio</a>
+                <div class="hidden md:flex space-x-6 items-center">
+                    <a href="#about" class="text-gray-400 hover:text-white transition font-medium">Acerca de mí</a>
+                    <a href="#projects" class="text-gray-400 hover:text-white transition font-medium">Proyectos</a>
+                    <a href="#skills" class="text-gray-400 hover:text-white transition font-medium">Habilidades</a>
+                    <a href="#contact" class="text-gray-400 hover:text-white transition font-medium">Contacto</a>
+                </div>
+            </nav>
+        </header>
+
+        <main class="container mx-auto px-4 py-8 space-y-16">
+            <!-- Sección de héroe con efecto de escritura -->
+            <section id="hero" class="text-center py-16 md:py-24">
+                <h1 id="headline" class="text-4xl md:text-6xl font-extrabold mb-4 text-white"></h1>
+                <p class="text-lg md:text-xl text-gray-400 mb-8 max-w-2xl mx-auto animate-fade-in-up">
+                    Fusiono creatividad con código para construir experiencias digitales únicas.
+                </p>
+            </section>
+            
+            <!-- Sección Acerca de mí -->
+            <section id="about" class="section-container p-6 rounded-2xl shadow-lg">
+                <h2 class="text-3xl font-bold mb-4 text-gray-300">Acerca de mí</h2>
+                <p class="text-lg leading-relaxed text-gray-300">
+                    Profesional en formación con una combinación única de conocimientos en desarrollo de software (DAM) e infraestructura informática (SMR). Busco un puesto donde pueda aplicar mis habilidades en programación Backend y Frontend para contribuir a proyectos innovadores, mientras sigo creciendo profesionalmente y aporto una visión integral desde la arquitectura de sistemas hasta la creación de aplicaciones finales.
+                </p>
+            </section>
+
+            <!-- Sección de Proyectos (diseño de cuadrícula) -->
+            <section id="projects" class="py-8">
+                <h2 class="text-3xl font-bold text-center mb-10 text-gray-300">Proyectos</h2>
+                <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <!-- Tarjeta de Proyecto 1: Prácticas DAM -->
+                    <div class="project-card section-container rounded-2xl p-6">
+                        <img src="https://placehold.co/600x400/1e293b/a8a8a8?text=Dashboard+CRM" alt="Imagen de un dashboard CRM" class="rounded-xl mb-4">
+                        <h3 class="text-xl font-semibold mb-2">Dashboard para CRM</h3>
+                        <p class="text-gray-400 mb-4">
+                            Desarrollo de un dashboard para un CRM utilizando HTML, CSS, JavaScript y Bootstrap. Participación en la maquetación y diseño de la interfaz de usuario.
+                        </p>
+                        <div class="flex flex-wrap gap-2 mb-4">
+                            <span class="bg-gray-700 text-gray-200 text-sm px-3 py-1 rounded-full">HTML</span>
+                            <span class="bg-gray-700 text-gray-200 text-sm px-3 py-1 rounded-full">CSS</span>
+                            <span class="bg-gray-700 text-gray-200 text-sm px-3 py-1 rounded-full">JavaScript</span>
+                            <span class="bg-gray-700 text-gray-200 text-sm px-3 py-1 rounded-full">Bootstrap</span>
+                        </div>
+                        <a href="https://github.com/wqryx" target="_blank" class="inline-block text-gray-400 hover:underline font-medium hover:text-white">Ver en GitHub &rarr;</a>
+                    </div>
+                    <!-- Tarjeta de Proyecto 2: CyberShield -->
+                    <div class="project-card section-container rounded-2xl p-6">
+                        <img src="https://placehold.co/600x400/1e293b/a8a8a8?text=Proyecto+CyberShield" alt="Imagen del proyecto CyberShield" class="rounded-xl mb-4">
+                        <h3 class="text-xl font-semibold mb-2">Proyecto de Grado: CyberShield</h3>
+                        <p class="text-gray-400 mb-4">
+                            Aplicación de ciberseguridad desarrollada para el Trabajo Final de Grado.
+                        </p>
+                        <div class="flex flex-wrap gap-2 mb-4">
+                            <span class="bg-gray-700 text-gray-200 text-sm px-3 py-1 rounded-full">Ciberseguridad</span>
+                            <span class="bg-gray-700 text-gray-200 text-sm px-3 py-1 rounded-full">DAM</span>
+                        </div>
+                        <a href="https://github.com/wqryx" target="_blank" class="inline-block text-gray-400 hover:underline font-medium hover:text-white">Ver en GitHub &rarr;</a>
+                    </div>
+                     <!-- Tarjeta de Proyecto 3: Prácticas SMR -->
+                    <div class="project-card section-container rounded-2xl p-6">
+                        <img src="https://placehold.co/600x400/1e293b/a8a8a8?text=Sistemas+Microinformáticos" alt="Imagen de un sistema microinformático" class="rounded-xl mb-4">
+                        <h3 class="text-xl font-semibold mb-2">Prácticas de Microinformática</h3>
+                        <p class="text-gray-400 mb-4">
+                            Resolución de incidencias de hardware y software en equipos de microinformática. Mantenimiento y configuración de sistemas.
+                        </p>
+                        <div class="flex flex-wrap gap-2 mb-4">
+                            <span class="bg-gray-700 text-gray-200 text-sm px-3 py-1 rounded-full">Windows</span>
+                            <span class="bg-gray-700 text-gray-200 text-sm px-3 py-1 rounded-full">Ubuntu</span>
+                            <span class="bg-gray-700 text-gray-200 text-sm px-3 py-1 rounded-full">Networking</span>
+                        </div>
+                        <a href="https://github.com/wqryx" target="_blank" class="inline-block text-gray-400 hover:underline font-medium hover:text-white">Ver en GitHub &rarr;</a>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- Sección de Habilidades -->
+            <section id="skills" class="section-container p-6 rounded-2xl shadow-lg">
+                <h2 class="text-3xl font-bold mb-6 text-gray-300 text-center">Habilidades</h2>
+                <h3 class="text-2xl font-semibold mb-4 text-gray-300 text-center">Lenguajes y Tecnologías</h3>
+                <div class="flex flex-wrap justify-center gap-4 mb-8">
+                    <div class="bg-gray-700 text-gray-200 rounded-full px-5 py-2 font-medium">JavaScript</div>
+                    <div class="bg-gray-700 text-gray-200 rounded-full px-5 py-2 font-medium">Python</div>
+                    <div class="bg-gray-700 text-gray-200 rounded-full px-5 py-2 font-medium">Java</div>
+                    <div class="bg-gray-700 text-gray-200 rounded-full px-5 py-2 font-medium">HTML5</div>
+                    <div class="bg-gray-700 text-gray-200 rounded-full px-5 py-2 font-medium">CSS3</div>
+                    <div class="bg-gray-700 text-gray-200 rounded-full px-5 py-2 font-medium">Tailwind</div>
+                    <div class="bg-gray-700 text-gray-200 rounded-full px-5 py-2 font-medium">Bootstrap</div>
+                    <div class="bg-gray-700 text-gray-200 rounded-full px-5 py-2 font-medium">MySQL</div>
+                    <div class="bg-gray-700 text-gray-200 rounded-full px-5 py-2 font-medium">SQL</div>
+                    <div class="bg-gray-700 text-gray-200 rounded-full px-5 py-2 font-medium">MongoDB</div>
+                    <div class="bg-gray-700 text-gray-200 rounded-full px-5 py-2 font-medium">PostgreSQL</div>
+                    <div class="bg-gray-700 text-gray-200 rounded-full px-5 py-2 font-medium">Git</div>
+                    <div class="bg-gray-700 text-gray-200 rounded-full px-5 py-2 font-medium">Ubuntu</div>
+                    <div class="bg-gray-700 text-gray-200 rounded-full px-5 py-2 font-medium">Kali Linux</div>
+                    <div class="bg-gray-700 text-gray-200 rounded-full px-5 py-2 font-medium">Windows Server</div>
+                    <div class="bg-gray-700 text-gray-200 rounded-full px-5 py-2 font-medium">Cisco</div>
+                </div>
+            </section>
+
+            <!-- Sección de Contacto -->
+            <section id="contact" class="py-8">
+                <h2 class="text-3xl font-bold text-center mb-6 text-gray-300">Contáctame</h2>
+                <p class="text-center text-lg text-gray-400 mb-8">
+                    Estoy disponible para nuevas oportunidades.
+                </p>
+                <div class="flex justify-center space-x-6">
+                    <a href="mailto:robertocrma04@gmail.com" class="text-gray-400 hover:text-white transition transform hover:scale-110">
+                        <i class="ri-mail-line text-2xl"></i>
+                    </a>
+                    <a href="https://linkedin.com/in/roberto-cristian-mangiurea" target="_blank" class="text-gray-400 hover:text-white transition transform hover:scale-110">
+                        <i class="ri-linkedin-fill text-2xl"></i>
+                    </a>
+                    <a href="https://github.com/wqryx" target="_blank" class="text-gray-400 hover:text-white transition transform hover:scale-110">
+                        <i class="ri-github-fill text-2xl"></i>
+                    </a>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- Scripts para efectos visuales -->
+    <script>
+        // Lógica del fondo 3D (three.js)
+        const scene = new THREE.Scene();
+        const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+        const renderer = new THREE.WebGLRenderer({ canvas: document.getElementById('bg-canvas') });
+        renderer.setSize(window.innerWidth, window.innerHeight);
+
+        const particles = new THREE.BufferGeometry();
+        const particleCount = 2000;
+        const positions = new Float32Array(particleCount * 3);
+        const colors = new Float32Array(particleCount * 3);
+        const color = new THREE.Color();
+        const maxRange = 500;
+
+        for (let i = 0; i < particleCount * 3; i += 3) {
+            positions[i] = (Math.random() - 0.5) * maxRange;
+            positions[i + 1] = (Math.random() - 0.5) * maxRange;
+            positions[i + 2] = (Math.random() - 0.5) * maxRange;
+            
+            // Asigna un color gris aleatorio a las partículas
+            const grayValue = Math.random() * 0.3 + 0.7; // Rango de gris claro a blanco
+            color.setRGB(grayValue, grayValue, grayValue);
+            colors[i] = color.r;
+            colors[i + 1] = color.g;
+            colors[i + 2] = color.b;
+        }
+
+        particles.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+        particles.setAttribute('color', new THREE.BufferAttribute(colors, 3));
+
+        const particleMaterial = new THREE.PointsMaterial({
+            size: 1,
+            vertexColors: true,
+            blending: THREE.AdditiveBlending,
+            transparent: true,
+            sizeAttenuation: true
+        });
+
+        const particleMesh = new THREE.Points(particles, particleMaterial);
+        scene.add(particleMesh);
+
+        camera.position.z = 100;
+
+        // Variables para el movimiento del ratón
+        let mouseX = 0;
+        let mouseY = 0;
+        let mouseMoved = false;
+
+        document.addEventListener('mousemove', (event) => {
+            mouseX = (event.clientX / window.innerWidth) * 2 - 1;
+            mouseY = -(event.clientY / window.innerHeight) * 2 + 1;
+            mouseMoved = true;
+        });
+
+        // Detecta cuando el ratón deja de moverse
+        let mouseMoveTimer;
+        document.addEventListener('mousemove', () => {
+            clearTimeout(mouseMoveTimer);
+            mouseMoveTimer = setTimeout(() => {
+                mouseMoved = false;
+            }, 100); // 100 ms de inactividad
+        });
+
+        // Bucle de animación para el fondo
+        function animate() {
+            requestAnimationFrame(animate);
+
+            if (mouseMoved) {
+                // Sigue al ratón con un movimiento suave
+                particleMesh.rotation.y += (mouseX * 0.5 - particleMesh.rotation.y) * 0.05;
+                particleMesh.rotation.x += (mouseY * 0.5 - particleMesh.rotation.x) * 0.05;
+            } else {
+                // Movimiento automático si el ratón está quieto
+                particleMesh.rotation.x += 0.0005;
+                particleMesh.rotation.y += 0.001;
+            }
+
+            renderer.render(scene, camera);
+        }
+
+        // Lógica de respuesta al redimensionar la ventana
+        window.addEventListener('resize', () => {
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(window.innerWidth, window.innerHeight);
+        });
+
+        // Lógica para el efecto de escritura en el título
+        const headlineElement = document.getElementById('headline');
+        const textToType = "Hola, soy Roberto";
+        let i = 0;
+        const typingSpeed = 100;
+
+        function typeWriter() {
+            if (i < textToType.length) {
+                headlineElement.innerHTML += textToType.charAt(i);
+                i++;
+                setTimeout(typeWriter, typingSpeed);
+            }
+        }
+
+        // Lanza la animación una vez que la página carga
+        window.onload = function() {
+            animate();
+            typeWriter();
+        };
+    </script>
+</body>
 </html>

@@ -4,8 +4,19 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Portfolio</title>
-    <!-- Tailwind CSS CDN -->
+    <!-- Tailwind CSS CDN con configuración personalizada -->
     <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'neutral-950': '#0A0A0A',
+                    }
+                }
+            }
+        }
+    </script>
     <!-- Remixicon CSS CDN para los iconos -->
     <link href="https://cdn.jsdelivr.net/npm/remixicon@4.2.0/fonts/remixicon.css" rel="stylesheet">
     <!-- Three.js CDN para el fondo animado en 3D -->
@@ -14,7 +25,7 @@
         /* Estilos base */
         body {
             font-family: 'Inter', sans-serif;
-            background-color: #0d0d0d; /* Fondo oscuro casi negro */
+            background-color: #000000; /* Fondo oscuro casi negro */
         }
         
         /* Estilos del canvas para el fondo 3D */
@@ -35,28 +46,51 @@
             z-index: 1;
         }
         
-        /* Efecto de borde para las secciones */
+        /* Efecto de borde degradado para las secciones */
         .section-container {
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            background: rgba(25, 25, 25, 0.8);
+            position: relative;
+            background: rgba(25, 25, 25, 0.7);
             backdrop-filter: blur(10px);
+            border-radius: 1rem; /* 16px */
+            border: 1px solid transparent;
+            background-clip: padding-box;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+            transition: all 0.3s ease;
         }
 
+        .section-container:hover {
+            box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+            border-color: rgba(255, 255, 255, 0.2);
+        }
+
+        .section-container::before {
+            content: '';
+            position: absolute;
+            top: -1px;
+            right: -1px;
+            bottom: -1px;
+            left: -1px;
+            z-index: -1;
+            margin: -2px;
+            background-image: linear-gradient(135deg, rgba(0, 0, 0, 0.2) 0%, rgba(255,255,255,0.05) 50%, rgba(255,255,255,0.2) 100%);
+            border-radius: 1rem;
+        }
+        
         /* Estilo para las tarjetas de proyecto */
         .project-card {
-            transform: perspective(1000px) rotateX(0deg);
+            transform: perspective(1000px) rotateX(0deg) scale(1);
             transition: transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
         }
 
         .project-card:hover {
-            transform: perspective(1000px) rotateX(5deg) scale(1.02);
+            transform: perspective(1000px) rotateX(5deg) scale(1.02) translateY(-5px);
             box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
         }
     </style>
 
 </head>
-<body class="text-gray-100 transition-colors duration-300">
+<body class="text-neutral-200 transition-colors duration-300">
 
     <!-- Canvas para el fondo 3D -->
     <canvas id="bg-canvas"></canvas>
@@ -65,14 +99,14 @@
     <div class="content">
 
         <!-- Navegación -->
-        <header class="sticky top-0 z-50 bg-transparent">
+        <header class="sticky top-0 z-50 bg-neutral-950/70 backdrop-blur-md">
             <nav class="container mx-auto px-4 py-4 flex justify-between items-center">
-                <a href="#" class="text-2xl font-bold text-gray-300 rounded-lg p-2 transition hover:text-white">Portfolio</a>
+                <a href="#" class="text-2xl font-bold text-neutral-300 rounded-lg p-2 transition hover:text-white">Portfolio</a>
                 <div class="hidden md:flex space-x-6 items-center">
-                    <a href="#about" class="text-gray-400 hover:text-white transition font-medium">Acerca de mí</a>
-                    <a href="#projects" class="text-gray-400 hover:text-white transition font-medium">Proyectos</a>
-                    <a href="#skills" class="text-gray-400 hover:text-white transition font-medium">Habilidades</a>
-                    <a href="#contact" class="text-gray-400 hover:text-white transition font-medium">Contacto</a>
+                    <a href="#about" class="text-neutral-400 hover:text-white transition font-medium">Acerca de mí</a>
+                    <a href="#projects" class="text-neutral-400 hover:text-white transition font-medium">Proyectos</a>
+                    <a href="#skills" class="text-neutral-400 hover:text-white transition font-medium">Habilidades</a>
+                    <a href="#contact" class="text-neutral-400 hover:text-white transition font-medium">Contacto</a>
                 </div>
             </nav>
         </header>
@@ -81,111 +115,115 @@
             <!-- Sección de héroe con efecto de escritura -->
             <section id="hero" class="text-center py-16 md:py-24">
                 <h1 id="headline" class="text-4xl md:text-6xl font-extrabold mb-4 text-white"></h1>
-                <p class="text-lg md:text-xl text-gray-400 mb-8 max-w-2xl mx-auto animate-fade-in-up">
+                <p class="text-lg md:text-xl text-neutral-400 mb-8 max-w-2xl mx-auto animate-fade-in-up">
                     Fusiono creatividad con código para construir experiencias digitales únicas.
                 </p>
             </section>
             
             <!-- Sección Acerca de mí -->
             <section id="about" class="section-container p-6 rounded-2xl shadow-lg">
-                <h2 class="text-3xl font-bold mb-4 text-gray-300">Acerca de mí</h2>
-                <p class="text-lg leading-relaxed text-gray-300">
+                <h2 class="text-3xl font-bold mb-4 text-neutral-200">Acerca de mí</h2>
+                <p class="text-lg leading-relaxed text-neutral-300">
                     Profesional en formación con una combinación única de conocimientos en desarrollo de software (DAM) e infraestructura informática (SMR). Busco un puesto donde pueda aplicar mis habilidades en programación Backend y Frontend para contribuir a proyectos innovadores, mientras sigo creciendo profesionalmente y aporto una visión integral desde la arquitectura de sistemas hasta la creación de aplicaciones finales.
                 </p>
             </section>
 
             <!-- Sección de Proyectos (diseño de cuadrícula) -->
             <section id="projects" class="py-8">
-                <h2 class="text-3xl font-bold text-center mb-10 text-gray-300">Proyectos</h2>
+                <h2 class="text-3xl font-bold text-center mb-10 text-neutral-200">Proyectos</h2>
                 <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
                     <!-- Tarjeta de Proyecto 1: Prácticas DAM -->
                     <div class="project-card section-container rounded-2xl p-6">
-                        <img src="https://placehold.co/600x400/1e293b/a8a8a8?text=Dashboard+CRM" alt="Imagen de un dashboard CRM" class="rounded-xl mb-4">
-                        <h3 class="text-xl font-semibold mb-2">Dashboard para CRM</h3>
-                        <p class="text-gray-400 mb-4">
+                        <img src="assets/dashboard.png" alt="Imagen de un dashboard CRM" class="rounded-xl mb-4 w-70 h-64 object-cover mx-auto">
+                        <h3 class="text-xl font-semibold mb-2 text-neutral-200">Dashboard para CRM</h3>
+                        <p class="text-neutral-400 mb-4">
                             Desarrollo de un dashboard para un CRM utilizando HTML, CSS, JavaScript y Bootstrap. Participación en la maquetación y diseño de la interfaz de usuario.
                         </p>
                         <div class="flex flex-wrap gap-2 mb-4">
-                            <span class="bg-gray-700 text-gray-200 text-sm px-3 py-1 rounded-full">HTML</span>
-                            <span class="bg-gray-700 text-gray-200 text-sm px-3 py-1 rounded-full">CSS</span>
-                            <span class="bg-gray-700 text-gray-200 text-sm px-3 py-1 rounded-full">JavaScript</span>
-                            <span class="bg-gray-700 text-gray-200 text-sm px-3 py-1 rounded-full">Bootstrap</span>
+                            <span class="bg-neutral-800 text-neutral-200 text-sm px-3 py-1 rounded-full">HTML</span>
+                            <span class="bg-neutral-800 text-neutral-200 text-sm px-3 py-1 rounded-full">CSS</span>
+                            <span class="bg-neutral-800 text-neutral-200 text-sm px-3 py-1 rounded-full">JavaScript</span>
+                            <span class="bg-neutral-800 text-neutral-200 text-sm px-3 py-1 rounded-full">Bootstrap</span>
                         </div>
-                        <a href="https://github.com/wqryx" target="_blank" class="inline-block text-gray-400 hover:underline font-medium hover:text-white">Ver en GitHub &rarr;</a>
+                        <a href="https://github.com/wqryx" target="_blank" class="inline-block text-neutral-400 hover:underline font-medium hover:text-indigo-400 transition">Ver en GitHub &rarr;</a>
                     </div>
                     <!-- Tarjeta de Proyecto 2: CyberShield -->
                     <div class="project-card section-container rounded-2xl p-6">
-                        <img src="https://placehold.co/600x400/1e293b/a8a8a8?text=Proyecto+CyberShield" alt="Imagen del proyecto CyberShield" class="rounded-xl mb-4">
-                        <h3 class="text-xl font-semibold mb-2">Proyecto de Grado: CyberShield</h3>
-                        <p class="text-gray-400 mb-4">
+                        <img src="assets/cybershield.png" alt="Imagen del proyecto CyberShield" class="rounded-xl mb-4 w-70 h-64 object-cover mx-auto">
+                        <h3 class="text-xl font-semibold mb-2 text-neutral-200">Proyecto de fin de Grado: CyberShield</h3>
+                        <p class="text-neutral-400 mb-4">
                             Aplicación de ciberseguridad desarrollada para el Trabajo Final de Grado.
                         </p>
                         <div class="flex flex-wrap gap-2 mb-4">
-                            <span class="bg-gray-700 text-gray-200 text-sm px-3 py-1 rounded-full">Ciberseguridad</span>
-                            <span class="bg-gray-700 text-gray-200 text-sm px-3 py-1 rounded-full">DAM</span>
+                            <span class="bg-neutral-800 text-neutral-200 text-sm px-3 py-1 rounded-full">Ciberseguridad</span>
+                            <span class="bg-neutral-800 text-neutral-200 text-sm px-3 py-1 rounded-full">DAM</span>
                         </div>
-                        <a href="https://github.com/wqryx" target="_blank" class="inline-block text-gray-400 hover:underline font-medium hover:text-white">Ver en GitHub &rarr;</a>
+                        <a href="https://github.com/wqryx/CyberShield" target="_blank" class="inline-block text-neutral-400 hover:underline font-medium hover:text-indigo-400 transition">Ver en GitHub &rarr;</a>
                     </div>
                      <!-- Tarjeta de Proyecto 3: Prácticas SMR -->
                     <div class="project-card section-container rounded-2xl p-6">
-                        <img src="https://placehold.co/600x400/1e293b/a8a8a8?text=Sistemas+Microinformáticos" alt="Imagen de un sistema microinformático" class="rounded-xl mb-4">
-                        <h3 class="text-xl font-semibold mb-2">Prácticas de Microinformática</h3>
-                        <p class="text-gray-400 mb-4">
-                            Resolución de incidencias de hardware y software en equipos de microinformática. Mantenimiento y configuración de sistemas.
+                        <img src="assets/contactos.png" alt="Imagen de un sistema microinformático" class="rounded-xl mb-4 w-70 h-64 object-cover mx-auto">
+                        <h3 class="text-xl font-semibold mb-2 text-neutral-200">Prácticas de Microinformática</h3>
+                        <p class="text-neutral-400 mb-4">
+                            Agenda de Contactos hecha con Astro y Docker.
                         </p>
                         <div class="flex flex-wrap gap-2 mb-4">
-                            <span class="bg-gray-700 text-gray-200 text-sm px-3 py-1 rounded-full">Windows</span>
-                            <span class="bg-gray-700 text-gray-200 text-sm px-3 py-1 rounded-full">Ubuntu</span>
-                            <span class="bg-gray-700 text-gray-200 text-sm px-3 py-1 rounded-full">Networking</span>
+                            <span class="bg-neutral-800 text-neutral-200 text-sm px-3 py-1 rounded-full">Astro</span>
+                            <span class="bg-neutral-800 text-neutral-200 text-sm px-3 py-1 rounded-full">Docker</span>
                         </div>
-                        <a href="https://github.com/wqryx" target="_blank" class="inline-block text-gray-400 hover:underline font-medium hover:text-white">Ver en GitHub &rarr;</a>
+                        <a href="https://github.com/wqryx/Contactos-Web" target="_blank" class="inline-block text-neutral-400 hover:underline font-medium hover:text-indigo-400 transition">Ver en GitHub &rarr;</a>
                     </div>
                 </div>
             </section>
             
             <!-- Sección de Habilidades -->
             <section id="skills" class="section-container p-6 rounded-2xl shadow-lg">
-                <h2 class="text-3xl font-bold mb-6 text-gray-300 text-center">Habilidades</h2>
-                <h3 class="text-2xl font-semibold mb-4 text-gray-300 text-center">Lenguajes y Tecnologías</h3>
+                <h2 class="text-3xl font-bold mb-6 text-neutral-200 text-center">Habilidades</h2>
+                <h3 class="text-2xl font-semibold mb-4 text-neutral-200 text-center">Lenguajes y Tecnologías</h3>
                 <div class="flex flex-wrap justify-center gap-4 mb-8">
-                    <div class="bg-gray-700 text-gray-200 rounded-full px-5 py-2 font-medium">JavaScript</div>
-                    <div class="bg-gray-700 text-gray-200 rounded-full px-5 py-2 font-medium">Python</div>
-                    <div class="bg-gray-700 text-gray-200 rounded-full px-5 py-2 font-medium">Java</div>
-                    <div class="bg-gray-700 text-gray-200 rounded-full px-5 py-2 font-medium">HTML5</div>
-                    <div class="bg-gray-700 text-gray-200 rounded-full px-5 py-2 font-medium">CSS3</div>
-                    <div class="bg-gray-700 text-gray-200 rounded-full px-5 py-2 font-medium">Tailwind</div>
-                    <div class="bg-gray-700 text-gray-200 rounded-full px-5 py-2 font-medium">Bootstrap</div>
-                    <div class="bg-gray-700 text-gray-200 rounded-full px-5 py-2 font-medium">MySQL</div>
-                    <div class="bg-gray-700 text-gray-200 rounded-full px-5 py-2 font-medium">SQL</div>
-                    <div class="bg-gray-700 text-gray-200 rounded-full px-5 py-2 font-medium">MongoDB</div>
-                    <div class="bg-gray-700 text-gray-200 rounded-full px-5 py-2 font-medium">PostgreSQL</div>
-                    <div class="bg-gray-700 text-gray-200 rounded-full px-5 py-2 font-medium">Git</div>
-                    <div class="bg-gray-700 text-gray-200 rounded-full px-5 py-2 font-medium">Ubuntu</div>
-                    <div class="bg-gray-700 text-gray-200 rounded-full px-5 py-2 font-medium">Kali Linux</div>
-                    <div class="bg-gray-700 text-gray-200 rounded-full px-5 py-2 font-medium">Windows Server</div>
-                    <div class="bg-gray-700 text-gray-200 rounded-full px-5 py-2 font-medium">Cisco</div>
+                    <div class="bg-neutral-800 text-neutral-200 rounded-full px-5 py-2 font-medium hover:bg-neutral-700 transition">JavaScript</div>
+                    <div class="bg-neutral-800 text-neutral-200 rounded-full px-5 py-2 font-medium hover:bg-neutral-700 transition">Python</div>
+                    <div class="bg-neutral-800 text-neutral-200 rounded-full px-5 py-2 font-medium hover:bg-neutral-700 transition">Java</div>
+                    <div class="bg-neutral-800 text-neutral-200 rounded-full px-5 py-2 font-medium hover:bg-neutral-700 transition">HTML5</div>
+                    <div class="bg-neutral-800 text-neutral-200 rounded-full px-5 py-2 font-medium hover:bg-neutral-700 transition">CSS3</div>
+                    <div class="bg-neutral-800 text-neutral-200 rounded-full px-5 py-2 font-medium hover:bg-neutral-700 transition">Tailwind</div>
+                    <div class="bg-neutral-800 text-neutral-200 rounded-full px-5 py-2 font-medium hover:bg-neutral-700 transition">Bootstrap</div>
+                    <div class="bg-neutral-800 text-neutral-200 rounded-full px-5 py-2 font-medium hover:bg-neutral-700 transition">MySQL</div>
+                    <div class="bg-neutral-800 text-neutral-200 rounded-full px-5 py-2 font-medium hover:bg-neutral-700 transition">SQL</div>
+                    <div class="bg-neutral-800 text-neutral-200 rounded-full px-5 py-2 font-medium hover:bg-neutral-700 transition">MongoDB</div>
+                    <div class="bg-neutral-800 text-neutral-200 rounded-full px-5 py-2 font-medium hover:bg-neutral-700 transition">PostgreSQL</div>
+                    <div class="bg-neutral-800 text-neutral-200 rounded-full px-5 py-2 font-medium hover:bg-neutral-700 transition">Git</div>
+                    <div class="bg-neutral-800 text-neutral-200 rounded-full px-5 py-2 font-medium hover:bg-neutral-700 transition">Ubuntu</div>
+                    <div class="bg-neutral-800 text-neutral-200 rounded-full px-5 py-2 font-medium hover:bg-neutral-700 transition">Kali Linux</div>
+                    <div class="bg-neutral-800 text-neutral-200 rounded-full px-5 py-2 font-medium hover:bg-neutral-700 transition">Windows Server</div>
+                    <div class="bg-neutral-800 text-neutral-200 rounded-full px-5 py-2 font-medium hover:bg-neutral-700 transition">Cisco</div>
                 </div>
             </section>
 
             <!-- Sección de Contacto -->
             <section id="contact" class="py-8">
-                <h2 class="text-3xl font-bold text-center mb-6 text-gray-300">Contáctame</h2>
-                <p class="text-center text-lg text-gray-400 mb-8">
+                <h2 class="text-3xl font-bold text-center mb-6 text-neutral-200">Contáctame</h2>
+                <p class="text-center text-lg text-neutral-400 mb-8">
                     Estoy disponible para nuevas oportunidades.
                 </p>
                 <div class="flex justify-center space-x-6">
-                    <a href="mailto:robertocrma04@gmail.com" class="text-gray-400 hover:text-white transition transform hover:scale-110">
+                    <a href="mailto:robertocrma04@gmail.com" class="text-neutral-400 hover:text-indigo-400 transition transform hover:scale-110">
                         <i class="ri-mail-line text-2xl"></i>
                     </a>
-                    <a href="https://linkedin.com/in/roberto-cristian-mangiurea" target="_blank" class="text-gray-400 hover:text-white transition transform hover:scale-110">
+                    <a href="https://linkedin.com/in/roberto-cristian-mangiurea" target="_blank" class="text-neutral-400 hover:text-indigo-400 transition transform hover:scale-110">
                         <i class="ri-linkedin-fill text-2xl"></i>
                     </a>
-                    <a href="https://github.com/wqryx" target="_blank" class="text-gray-400 hover:text-white transition transform hover:scale-110">
+                    <a href="https://github.com/wqryx" target="_blank" class="text-neutral-400 hover:text-indigo-400 transition transform hover:scale-110">
                         <i class="ri-github-fill text-2xl"></i>
                     </a>
                 </div>
             </section>
         </main>
+
+        <!-- Pie de página -->
+        <footer class="bg-neutral-950/70 text-center py-6 mt-8">
+            <p class="text-neutral-400">&copy; 2024 Roberto Cristian Mangiurea Anton. Todos los derechos reservados.</p>
+        </footer>
     </div>
 
     <!-- Scripts para efectos visuales -->

@@ -2,11 +2,13 @@
 
 Un sitio web de portafolio profesional y moderno construido con un enfoque en un diseño limpio, rendimiento y experiencia de usuario. Cuenta con un diseño responsivo, un fondo 3D dinámico y animaciones fluidas.
 
-## Demo en Vivo
+## 🚀 Despliegue
 
-  * [https://primer-portfolio-wqryx.vercel.app/](https://www.google.com/url?sa=E&source=gmail&q=https://primer-portfolio-wqryx.vercel.app/)
+### Despliegue en Vercel:
 
-## Características
+[![Vercel](https://img.shields.io/badge/Vercel-Deploy-blue?logo=vercel&logoColor=white)](https://portfolio-roberto-cm.vercel.app)
+
+## ✨ Características
 
   * **Diseño Responsivo**: El sitio web se adapta a diferentes tamaños de pantalla, ofreciendo una experiencia fluida tanto en computadoras de escritorio como en dispositivos móviles.
   * **Fondo 3D Interactivo**: Un fondo de partículas animado creado con **Three.js** que responde al movimiento del ratón, añadiendo un toque visual único.
@@ -15,7 +17,7 @@ Un sitio web de portafolio profesional y moderno construido con un enfoque en un
   * **Contenido Dinámico**: El título principal presenta un efecto de máquina de escribir, creando una introducción atractiva para los visitantes.
   * **Exhibición de Proyectos**: Una sección dedicada para mostrar proyectos, incluyendo imágenes, descripciones y las tecnologías utilizadas, con un efecto interactivo al pasar el cursor.
 
-## Tecnologías Utilizadas
+## 💻 Tecnologías Utilizadas
 
   * **HTML5**: Estructura del sitio web.
   * **CSS3**: Estilos y animaciones personalizadas.
